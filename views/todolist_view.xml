@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	
+
+
+	<record id="to_do_list_view_tree" model="ir.ui.view">
+		<field name="name">to.do.list.tree</field>
+		<field name="model">to.do.list</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name"/>
+				<field name="date_end"/>
+				<field name="date_deadline"/>
+				<field name="state"/>
+			</tree>
+				
+		</field>
+	</record>
+
+
+
+
+	<record id="to_do_list_view_form" model="ir.ui.view">
+		<field name="name">to.do.list.form</field>
+		<field name="model">to.do.list</field>
+		<field name="arch" type="xml">
+			<form string="To-Do task">
+				<header>
+					<field name="state" widget="statusbar" clickable="True"/>
+				</header>
+				<sheet>
+				<group col="2" colspan="2">
+					<field name="name"/>
+				</group>
+				<newline/>
+				<group col="4" colspan="2">
+					<field name="date_deadline" string="Fecha Límite"/>
+					<field name="date_end" attrs="{'readonly':[('state','=','pendiente')], 'required':[('state','=','resuelta')]}" string="Fecha de Finalización"/>
+				</group>
+				<group string="Observación">
+					<field name="observacion" nolabel="1"/>
+				</group>
+			</sheet>
+			</form>
+				
+		</field>
+	</record>
+
+
+
+	<record id="to_do_list_action" model="ir.actions.act_window">
+        <field name="name">To-Do list</field>
+        <field name="res_model">to.do.list</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <record id="to_do_list_view_search" model="ir.ui.view">
+    	<field name="name">to.do.list.search</field>
+    	<field name="model">to.do.list</field>
+    	<field name="arch" type="xml">
+    	    <search string="Busqueda Rápida">
+    	    	<field name="state" string="Estado"/>
+    	    <separator/>
+    	        <filter name="group_user" string="Estado" domain="[]"  context="{'group_by':'state'}" help="Estado de la tarea"/>
+    	    </search>
+    	</field>
+    </record>
+
+
+
+
+
+
+    <record id="to_do_list_inherith_action" model="ir.actions.act_window">
+        <field name="name">Usuarios</field>
+        <field name="res_model">res.users</field>
+        <field name="view_type">form</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+
+
+<menuitem id="to_do_list_menu_root" name="ToDolist"/>
+	<menuitem id="to_do_list_menu" name="ToDolist" parent="to_do_list_menu_root"/>
+	<menuitem id="task_menu" name="Task" parent="to_do_list_menu" action="to_do_list_action"/>
+<menuitem id="configuracion_menu" name="Configuración" parent="to_do_list_menu_root" />
+<menuitem id="configuracion_menu_action" name="Usuarios" parent="configuracion_menu" sequence="100" action="to_do_list_inherith_action"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</odoo>
