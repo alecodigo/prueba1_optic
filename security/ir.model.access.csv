@@ -1,2 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_to_do_list,to.do.list,model_to_do_list,base.group_system,1,1,1,1
+access_to_do_list,to_do_list,model_to_do_list,base.group_system,1,1,1,1
+access_formacion,formacion,model_formacion,base.group_system,1,1,1,1
+access_formacion_dificultades,formacion_dificultades,model_formacion_dificultades,base.group_system,1,1,1,1
