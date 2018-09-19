@@ -10,35 +10,19 @@ class ToDoList(models.Model):
 	"""  Todo class permitirá crear nuestras tareas y listarlas """
 	_name = "to.do.list"
 	_description = "to-do list app"
-	#_rec_name =
+	_rec_name = 'name'
 
 	name = fields.Char('Tarea', required=True)
-	date_end = fields.Date('Fecha de Finalizacion', help="Realizada en la Fecha Indicada por el usuario")
-	date_deadline = fields.Date('Fecha Limite', required=True, help="Fecha limite para culminar las tareas")
-	state = fields.Selection([('pendiente','Pendiente'),('resuelta','Resuelta')],'Estado', default='pendiente')
-	observacion = fields.Text('observacion', help="Ingrese algun comentario sobre la tarea")
-	formacion = fields.Boolean('')
+	date_end = fields.Date(string='Fecha de Finalizacion', help="Realizada en la Fecha Indicada por el usuario")
+	date_deadline = fields.Date(string='Fecha Limite', required=True, help="Fecha limite para culminar las tareas")
+	state = fields.Selection([('pendiente','Pendiente'),('resuelta','Resuelta')],string='Estado', default='pendiente')
+	observacion = fields.Text(string='observacion', help="Ingrese algun comentario sobre la tarea")
+	topics_ids = fields.One2many('formacion.plan.estudio', 'todo_id', string='Topics')
+	formacion = fields.Boolean(string='Training')
 
 
-
-
-class formacion(models.Model):
-	""" Modelo de Formacion """
-	_name = 'formacion'
-    #_rec_name = 'id_cliente'
-    #_description = 'Cartera de Clientes de la empresa'
-
-
-	formacion = fields.Char('Formacion', help="Indique nombre de la formacion")
-	date = fields.Date('Fecha de Inicio', help="Indique la fecha de inicio")
-	date_end = fields.Date('Fecha de culminacion', help="Indique la fecha de culminacion")
-	state = fields.Selection([('encurso', 'En curso'),
-								('finalizada','Finalizada'),
-								('pausada','Pausada'),
-								],"Estatus")
-	notas = fields.Text('Observaciones', help="Indique alguna observacion")
-	progreso = fields.Float('Progreso', help="progreso del aprendizaje")
-	meta = fields.Char('Meta', help="Indique el objetivo el cual se plantea llegar para adquirir una habilidad")
+	def formacion(self):
+		self.formacion = True
 
 
 
@@ -49,8 +33,8 @@ class FormacionDificultades(models.Model):
 	#_rec_name =''
 	#_description = ''
 	
-	dificultad = fields.Char('Dificultades', help="Ingrese dificultad")
-	observacion = fields.Text('Observaciones')
+	dificultad = fields.Char(string='Dificultades', help="Ingrese dificultad")
+	observacion = fields.Text(string='Observaciones')
 
 
 
@@ -60,11 +44,11 @@ class FormacionPlanEstudio(models.Model):
 	#_rec_name = ''
 	#_description = ''
 
-	name = fields.Char('name', help="Nombre del tema a estudiar")
-	date_expected = fields.Date('Fecha Estimada', help="Fecha esperada para estudiar un tema")
-	date_start = fields.Date('Fecha de Inicio', help="Fecha real en la cual se empieza a estudiar un tema")
-	date_end = fields.Date('Fecha de Termino', Help="Fecha de finalizacion de estudio de un tema")
-
+	name = fields.Char(string='Nombre', help="Nombre del tema a estudiar")
+	date_expected = fields.Date(string='Fecha Estimada', help="Fecha esperada para estudiar un tema")
+	date_start = fields.Date(string='Fecha de Inicio', help="Fecha real en la cual se empieza a estudiar un tema")
+	date_end = fields.Date(string='Fecha de Termino', Help="Fecha de finalizacion de estudio de un tema")
+	todo_id = fields.Many2one('to.do.list', string='Task')
 
 # crear un modelo que me permita anotar para investigar un tema o algo 
 # que me llame la atencion para no olvidarlo e investigarlo luego
